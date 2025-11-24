@@ -1,0 +1,24 @@
+﻿################################################################################
+# 이 .gitignore 파일은 Microsoft(R) Visual Studio에서 자동으로 만들어졌습니다.
+################################################################################
+
+/VisionHubAOI/.vs/VisionHubAOI/v17
+/VisionHubAOI/.vs/VisionHubAOI/FileContentIndex
+/VisionHubAOI/VisionHubAOI.Native.Core/x64/Debug
+/VisionHubAOI/x64/Debug
+/VisionHubAOI/vcpkg_installed
+/VisionHubAOI/VisionHubAOI.Native.Binding/x64
+/VisionHubAOI/VisionHubAOI.Native.Core/x64/Release
+/VisionHubAOI/VisionHubAOI.Native.Engine/x64
+/VisionHubAOI/x64/Release
+/VisionHubAOI/CppConsoleTest/x64/Debug
+/VisionHubAOI/VisionHubAOI.Plugin.OpenCV/x64/Debug
+/VisionHubAOI/VisionHubAOI.Managed.Core/obj
+/VisionHubAOI/VisionHubAOI.Managed.Core/x64/Debug
+/VisionHubAOI/CppConsoleTest/x64/Release
+/VisionHubAOI/VisionHubAOI.Managed.Core/x64/Release
+/VisionHubAOI/VisionHubAOI.Plugin.OpenCV/x64/Release
+/VisionHubAOI/.vs/VisionHubAOI/DesignTimeBuild
+/VisionHubAOI/Documentation
+/VisionHubAOI/DoxyGen/html
+/VisionHubAOI/DoxyGen/latex

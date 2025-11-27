@@ -109,7 +109,7 @@ namespace visionhub {
 				(std::string("const ") + T_AS + "& front()").c_str(),
 				asFUNCTION(FuncBase::front),
 				asCALL_CDECL_OBJFIRST);
-			assert(error_code >= 0 && "Failed to register push function");
+			assert(error_code >= 0 && "Failed to register front function");
 
 
 			error_code = engine->RegisterObjectMethod(
@@ -117,7 +117,7 @@ namespace visionhub {
 				(std::string("const ") + T_AS + "& back()").c_str(),
 				asFUNCTION(FuncBase::back),
 				asCALL_CDECL_OBJFIRST);
-			assert(error_code >= 0 && "Failed to register push function");
+			assert(error_code >= 0 && "Failed to register back function");
 
 
 			error_code = engine->RegisterObjectMethod(
@@ -125,7 +125,7 @@ namespace visionhub {
 				"bool empty()",
 				asFUNCTION(FuncBase::empty),
 				asCALL_CDECL_OBJFIRST);
-			assert(error_code >= 0 && "Failed to register push function");
+			assert(error_code >= 0 && "Failed to register empty function");
 
 
 			error_code = engine->RegisterObjectMethod(
@@ -133,7 +133,7 @@ namespace visionhub {
 				"void pop()",
 				asFUNCTION(FuncBase::pop),
 				asCALL_CDECL_OBJFIRST);
-			assert(error_code >= 0 && "Failed to register push function");
+			assert(error_code >= 0 && "Failed to register pop function");
 
 
 			error_code = engine->RegisterObjectMethod(
@@ -141,7 +141,7 @@ namespace visionhub {
 				"uint64 size()",
 				asFUNCTION(FuncBase::size),
 				asCALL_CDECL_OBJFIRST);
-			assert(error_code >= 0 && "Failed to register push function");
+			assert(error_code >= 0 && "Failed to register size function");
 
 		}
 

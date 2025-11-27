@@ -13,7 +13,7 @@ namespace visionhub {
 	namespace v1 {
 		struct blob;
 		struct impl_blob;
-		using sharedBlob = std::shared_ptr<blob>;
+		using blob_ptr = std::shared_ptr<blob>;
 		struct memoryBlock;
 		struct blob {
 #pragma region Private Property
@@ -25,6 +25,8 @@ namespace visionhub {
 		public:
 			VISIONHUB_AOI_NATIVE_CORE_API blob(const void* data, std::size_t n);
 			VISIONHUB_AOI_NATIVE_CORE_API blob(const memoryBlock & block);
+			VISIONHUB_AOI_NATIVE_CORE_API blob();
+
 #pragma endregion
 
 #pragma region Public Functions 

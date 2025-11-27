@@ -73,11 +73,11 @@ std::shared_ptr<visionhub::v1::memoryPool> visionhub::v1::facadeEngine::globalPo
 	return this->pool;
 }
 
-void visionhub::v1::facadeEngine::argument(const visionhub::v1::sharedValue & value) {
+void visionhub::v1::facadeEngine::argument(const visionhub::v1::value_ptr & value) {
 	this->_argument = value;
 }
 
-visionhub::v1::sharedValue visionhub::v1::facadeEngine::output() {
+visionhub::v1::value_ptr visionhub::v1::facadeEngine::output() {
 	return this->_output;
 }
 

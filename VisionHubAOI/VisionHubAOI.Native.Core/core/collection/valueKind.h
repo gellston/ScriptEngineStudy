@@ -3,7 +3,6 @@
 #ifndef VISIONHUB_AOI_NATIVE_CORE_VALUE_KIND
 #define VISIONHUB_AOI_NATIVE_CORE_VALUE_KIND
 
-
 namespace visionhub {
 	namespace v1 {
 		enum class valueKind {

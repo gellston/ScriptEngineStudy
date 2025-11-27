@@ -24,8 +24,8 @@ namespace visionhub {
 #pragma region Private Property
 		private:
 			std::shared_ptr<memoryPool> pool;
-			visionhub::v1::sharedValue _argument;
-			visionhub::v1::sharedValue _output;
+			visionhub::v1::value_ptr _argument;
+			visionhub::v1::value_ptr _output;
 #pragma endregion
 
 		public:
@@ -41,8 +41,8 @@ namespace visionhub {
 			void cout(const std::string& text);
 			image_ptr make_image(unsigned int width, unsigned int height, unsigned int channel, depthType depth);
 
-			void argument(const visionhub::v1::sharedValue & value);
-			visionhub::v1::sharedValue output();
+			void argument(const visionhub::v1::value_ptr& value);
+			visionhub::v1::value_ptr output();
 			void resetOutput();
 
 			visionhub::v1::value argument();

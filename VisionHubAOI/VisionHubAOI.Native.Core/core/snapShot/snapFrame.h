@@ -40,6 +40,7 @@ namespace visionhub {
 			VISIONHUB_AOI_NATIVE_CORE_API void print(int intent);
 			VISIONHUB_AOI_NATIVE_CORE_API std::vector<snapEntry_ptr> locals();
 			VISIONHUB_AOI_NATIVE_CORE_API std::optional<snapEntry_ptr> thisObj();
+			VISIONHUB_AOI_NATIVE_CORE_API bool hasThis();
 			VISIONHUB_AOI_NATIVE_CORE_API int column();
 			VISIONHUB_AOI_NATIVE_CORE_API int line();
 			VISIONHUB_AOI_NATIVE_CORE_API std::string section();

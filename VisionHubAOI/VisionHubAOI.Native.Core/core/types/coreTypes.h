@@ -11,7 +11,6 @@ namespace visionhub {
 			object,
 			rect,
 			image,
-			test
 		};
 	}
 }

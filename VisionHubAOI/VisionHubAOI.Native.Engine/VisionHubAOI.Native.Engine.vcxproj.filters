@@ -71,9 +71,6 @@
     <ClInclude Include="engine\engineException\abortException.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="engine\adapter\var.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="engine\helper\helper_vector.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -87,6 +84,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="engine\helper\helper_queue.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\helper\helper_map.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

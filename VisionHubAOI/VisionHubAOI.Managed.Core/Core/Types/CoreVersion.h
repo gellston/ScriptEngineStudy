@@ -8,7 +8,7 @@
 
 namespace VisionHub {
 	namespace V1 {
-		value class CoreVersion {
+		public value class CoreVersion {
 		public:
 			static const int Major();
 			static const int Minor();

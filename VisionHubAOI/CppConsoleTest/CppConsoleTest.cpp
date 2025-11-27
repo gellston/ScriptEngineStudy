@@ -6,6 +6,7 @@
 #include <ostream>
 #include <stack>
 #include <queue>
+#include <map>
 
 #include <core/collection/memoryPool.h>
 #include <core/collection/memoryBlock.h>
@@ -25,8 +26,6 @@
 int main()
 {
 
-	std::queue<int> test;
-	
 
 	auto engine = visionhub::v1::engine::create();
 
@@ -35,7 +34,7 @@ int main()
 	engine->addLibrary({
 		"VisionHubAOI.Plugin.OpenCV.dll"
 	});
-	engine->loadLibrary("E:\\Github\\visionhubaoi\\VisionHubAOI\\x64\\Release\\Plugins");
+	engine->loadPlugin("E:\\Github\\visionhubaoi\\VisionHubAOI\\x64\\Release\\Plugins");
 
 	engine->setTraceCallback([&](visionhub::v1::traceType type, int row, int col, std::string section, std::string message) {
 		std::string errorType = type == visionhub::v1::traceType::error ? "ERROR" :
@@ -58,20 +57,6 @@ int main()
 	});
 
 
-	engine->loadScript("test_script(bong)",
-		R"(
-void run(){
-
-}
-
-void setup(){
-
-}
-
-void shutdown(){
-
-}
-)");
 
 
 
@@ -82,7 +67,29 @@ void shutdown(){
 
 
 	try {
-		engine->compile();
+
+
+		engine->compile("E://test.txt");
+
+
+
+		std::cout << "test" << std::endl;
+
+
+//		engine->compile("test_script(bong)",
+//			R"(
+//void run(){
+//	core::image_ptr input_image = opencv::imread("E://test_ttt.jpg", core::colorType::color);
+//	core::output("test", input_image);
+//}
+//
+//void setup(){
+//}
+//
+//void shutdown(){
+//}
+//)");
+
 	}
 	catch (std::exception ex) {
 		std::cout << ex.what() << std::endl;
@@ -100,18 +107,12 @@ void shutdown(){
 				engine->mode(visionhub::v1::execMode::run);
 				engine->run();
 			
-
-
 				auto output = engine->output();
+				auto raw_output = (*output)["test"];
 
-				std::cout << "check : " << (int)output->kind() << std::endl;
 
-				unsigned int testValue = 0;
-
-				if ((*output)["test"]["width"].get(testValue) == true) {
-					std::cout << "test" << std::endl;
-				}
-
+				auto binary_data = raw_output.serialize();
+				visionhub::v1::value image = visionhub::v1::value::deserialize(binary_data);
 
 			}
 			catch (visionhub::v1::suspendException ex) {

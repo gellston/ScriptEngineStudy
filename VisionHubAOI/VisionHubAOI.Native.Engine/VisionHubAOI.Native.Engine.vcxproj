@@ -151,10 +151,7 @@ copy /y "$(OutDir)VisionHubAOI.Plugin.Opencv.dll" ""$(OutDir)Plugins\"</Command>
     </Link>
     <PostBuildEvent>
       <Command>
-if not exist "$(OutDir)Plugins" mkdir "$(OutDir)Plugins"
-
-
-copy /y "$(OutDir)VisionHubAOI.Plugin.Opencv.dll" ""$(OutDir)Plugins\"</Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -170,9 +167,9 @@ copy /y "$(OutDir)VisionHubAOI.Plugin.Opencv.dll" ""$(OutDir)Plugins\"</Command>
     <ClCompile Include="VisionHubAOI.Native.Engine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine\adapter\var.h" />
     <ClInclude Include="engine\engineException\abortException.h" />
     <ClInclude Include="engine\engineException\execException.h" />
+    <ClInclude Include="engine\helper\helper_map.h" />
     <ClInclude Include="engine\helper\helper_queue.h" />
     <ClInclude Include="engine\helper\helper_stack.h" />
     <ClInclude Include="engine\helper\helper_value.h" />

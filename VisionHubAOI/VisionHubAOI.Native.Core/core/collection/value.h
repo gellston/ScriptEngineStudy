@@ -18,7 +18,7 @@ namespace visionhub {
 		struct impl_value;
 		struct blob;
 
-		using sharedValue = std::shared_ptr<value>;
+		using value_ptr = std::shared_ptr<value>;
 		using array = std::vector<value>;
 		using map = std::unordered_map<std::string, value>;
 		
@@ -63,13 +63,15 @@ namespace visionhub {
 
 			template<typename T> void set(const T& value) {
 				if (std::is_enum<T>()) {
-					this->set<int32_t>(value);
+					T temp = value;
+					this->set<int32_t>(static_cast<int32_t>(value));
 				}
 				throw std::exception("Invalid data type");
 			}
 
 			VISIONHUB_AOI_NATIVE_CORE_API visionhub::v1::value operator [](const std::string &);
 			VISIONHUB_AOI_NATIVE_CORE_API visionhub::v1::value operator [](const int&);
+			VISIONHUB_AOI_NATIVE_CORE_API void operator=(const visionhub::v1::value&);
 
 			VISIONHUB_AOI_NATIVE_CORE_API void add(const visionhub::v1::value& value);
 			VISIONHUB_AOI_NATIVE_CORE_API void set(const std::string & key, const visionhub::v1::value & value);
@@ -78,6 +80,7 @@ namespace visionhub {
 			VISIONHUB_AOI_NATIVE_CORE_API std::size_t size();
 			VISIONHUB_AOI_NATIVE_CORE_API std::size_t count();
 			VISIONHUB_AOI_NATIVE_CORE_API std::vector<uint8_t> serialize();
+			VISIONHUB_AOI_NATIVE_CORE_API std::vector<std::string> keys();
 			VISIONHUB_AOI_NATIVE_CORE_API static visionhub::v1::value deserialize(const std::vector<uint8_t>& data, std::size_t offset = 0);
 #pragma endregion
 		};

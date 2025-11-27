@@ -21,9 +21,9 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <EnableManagedPackageReferenceSupport>true</EnableManagedPackageReferenceSupport>
-    <ProjectGuid>{920F0880-E1AA-4FBF-90E2-8B3AA4A83950}</ProjectGuid>
+    <ProjectGuid>{6BBAE003-89B9-4286-ABD0-8D4F325D0AD8}</ProjectGuid>
     <Keyword>NetCoreCProj</Keyword>
-    <RootNamespace>VisionHubAOIManagedCore</RootNamespace>
+    <RootNamespace>VisionHubAOIManagedEngine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
     <TargetFramework>net8.0</TargetFramework>
     <WindowsTargetPlatformMinVersion>7.0</WindowsTargetPlatformMinVersion>
@@ -83,10 +83,10 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)VisionHubAOI.Native.Core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\VisionHubAOI.Native.Engine;$(SolutionDir)\VisionHubAOI.Native.Core</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>VisionHubAOI.Native.Core.lib</AdditionalDependencies>
+      <AdditionalDependencies>VisionHubAOI.Native.Engine.lib;VisionHubAOI.Native.Core.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -119,40 +119,24 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)VisionHubAOI.Native.Core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\VisionHubAOI.Native.Engine;$(SolutionDir)\VisionHubAOI.Native.Core</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>VisionHubAOI.Native.Core.lib</AdditionalDependencies>
+      <AdditionalDependencies>VisionHubAOI.Native.Engine.lib;VisionHubAOI.Native.Core.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Blob.cpp" />
-    <ClCompile Include="SnapShot.cpp" />
-    <ClCompile Include="SnapFrame.cpp" />
-    <ClCompile Include="SnapEntry.cpp" />
-    <ClCompile Include="SnapValue.cpp" />
-    <ClCompile Include="MemoryBlock.cpp" />
-    <ClCompile Include="Value.cpp" />
-    <ClCompile Include="CoreVersion.cpp" />
-    <ClCompile Include="VisionHubAOI.Managed.Core.cpp" />
+    <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="VisionHubAOI.Managed.Engine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core\Collection\Blob.h" />
-    <ClInclude Include="Core\Collection\MemoryBlock.h" />
-    <ClInclude Include="Core\Collection\Value.h" />
-    <ClInclude Include="Core\Collection\ValueKind.h" />
-    <ClInclude Include="Core\SnapShot\SnapEntry.h" />
-    <ClInclude Include="Core\SnapShot\SnapFrame.h" />
-    <ClInclude Include="Core\SnapShot\SnapKind.h" />
-    <ClInclude Include="Core\SnapShot\SnapShot.h" />
-    <ClInclude Include="Core\SnapShot\SnapValue.h" />
-    <ClInclude Include="Core\Types\ColorType.h" />
-    <ClInclude Include="Core\Types\CoreTypes.h" />
-    <ClInclude Include="Core\Types\CoreVersion.h" />
-    <ClInclude Include="Core\Types\DepthType.h" />
-    <ClInclude Include="Core\Types\ExecMode.h" />
-    <ClInclude Include="Core\Types\TraceType.h" />
+    <ProjectReference Include="..\VisionHubAOI.Managed.Core\VisionHubAOI.Managed.Core.vcxproj">
+      <Project>{920f0880-e1aa-4fbf-90e2-8b3aa4a83950}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\Engine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

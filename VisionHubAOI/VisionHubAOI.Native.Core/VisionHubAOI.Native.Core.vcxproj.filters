@@ -57,9 +57,6 @@
     <ClCompile Include="staticCallStarter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="test.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\coreMacro\api.h">
@@ -153,9 +150,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="core\collection\raii2.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="core\test.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

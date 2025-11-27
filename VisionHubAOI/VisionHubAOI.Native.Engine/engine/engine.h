@@ -31,7 +31,7 @@
 #include <vector>
 #include <deque>
 #include <functional>
-
+#include <filesystem>
 
 
 namespace visionhub {
@@ -46,7 +46,8 @@ namespace visionhub {
 #pragma region Impl
 		class impl_engine;
 #pragma endregion
-
+		class engine;
+		using engine_ptr = std::shared_ptr<engine>;
 		class engine : visionhub::v1::iengine{
 
 		private:
@@ -77,7 +78,7 @@ namespace visionhub {
 
 #pragma region Factory
 
-			VISIONHUB_AOI_NATIVE_ENGINE_API static std::shared_ptr<engine> create();
+			VISIONHUB_AOI_NATIVE_ENGINE_API static engine_ptr create();
 #pragma endregion
 
 
@@ -89,8 +90,11 @@ namespace visionhub {
 
 
 			VISIONHUB_AOI_NATIVE_ENGINE_API void addLibrary(std::vector<std::string> names);
-			VISIONHUB_AOI_NATIVE_ENGINE_API void loadLibrary(std::string path);
+			VISIONHUB_AOI_NATIVE_ENGINE_API void loadPlugin(std::string path);
 			VISIONHUB_AOI_NATIVE_ENGINE_API void loadScript(std::string scriptName, std::string content);
+			VISIONHUB_AOI_NATIVE_ENGINE_API void loadScript(std::filesystem::path path);
+			VISIONHUB_AOI_NATIVE_ENGINE_API void compile(std::string scriptName, std::string content);
+			VISIONHUB_AOI_NATIVE_ENGINE_API void compile(std::filesystem::path path);
 			VISIONHUB_AOI_NATIVE_ENGINE_API void compile();
 
 
@@ -103,10 +107,11 @@ namespace visionhub {
 			VISIONHUB_AOI_NATIVE_ENGINE_API void abort();
 
 
-			//collection
-			VISIONHUB_AOI_NATIVE_ENGINE_API void argument(visionhub::v1::sharedValue data);
-			VISIONHUB_AOI_NATIVE_ENGINE_API visionhub::v1::sharedValue output();
+			//Collection
+			VISIONHUB_AOI_NATIVE_ENGINE_API void argument(visionhub::v1::value_ptr data);
+			VISIONHUB_AOI_NATIVE_ENGINE_API visionhub::v1::value_ptr output();
 			VISIONHUB_AOI_NATIVE_ENGINE_API void resetOutput();
+
 
 			//Logs
 			VISIONHUB_AOI_NATIVE_ENGINE_API void storeLogs(bool enable);

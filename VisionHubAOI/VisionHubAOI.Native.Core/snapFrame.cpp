@@ -56,6 +56,9 @@ std::optional<visionhub::v1::snapEntry_ptr> visionhub::v1::snapFrame::thisObj() 
 	return this->impl->thisObj;
 }
 
+bool visionhub::v1::snapFrame::hasThis() {
+	return this->impl->thisObj.has_value();
+}
 
 int visionhub::v1::snapFrame::column() {
 	return this->impl->column;

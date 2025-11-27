@@ -6,7 +6,7 @@
 
 namespace VisionHub {
 	namespace V1 {
-		enum class TraceType {
+		public enum class TraceType {
 			Error = 0,
 			Warnning = 1,
 			Information = 2

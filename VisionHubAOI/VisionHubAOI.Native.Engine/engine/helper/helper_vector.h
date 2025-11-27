@@ -176,7 +176,7 @@ namespace visionhub {
 
 			error_code = engine->RegisterObjectMethod(
 				V_AS.c_str(),
-				("const " + T_AS + " & opIndex(int) const").c_str(),
+				(T_AS + " & opIndex(int) const").c_str(),
 				asFUNCTION(FuncBase::index),
 				asCALL_CDECL_OBJFIRST);
 			assert(error_code >= 0 && "Failed to register operator[]");

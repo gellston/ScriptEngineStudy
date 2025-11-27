@@ -18,6 +18,8 @@ namespace visionhub {
 				return data != nullptr;
 			}
 		};
+
+		using memoryBlock_ptr = std::shared_ptr<memoryBlock>;
 	}
 }
 

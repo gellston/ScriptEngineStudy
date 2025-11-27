@@ -11,8 +11,6 @@
 #include "engine/facade/facadeEngine.h"
 
 
-//Adapter
-#include "engine/adapter/var.h"
 
 //Helper
 #include "engine/helper/helper_vector.h"
@@ -20,6 +18,7 @@
 #include "engine/helper/helper_value.h"
 #include "engine/helper/helper_stack.h"
 #include "engine/helper/helper_queue.h"
+#include "engine/helper/helper_map.h"
 
 #include <core/types/runtime.h>
 #include <core/types/execMode.h>
@@ -30,7 +29,6 @@
 #include <core/object.h>
 #include <core/rect.h>
 #include <core/image.h>
-#include <core/test.h>
 #include <core/types/colorType.h>
 #include <core/types/coreVersion.h>
 
@@ -51,6 +49,8 @@
 #include <unordered_set>
 #include <deque>
 #include <filesystem>
+#include <fstream>
+#include <sstream>
 #include <Windows.h>
 
 
@@ -730,6 +730,8 @@ void visionhub::v1::engine::loadInternals() {
 		RegisterStack<std::string>(this->impl->engine, "string");
 
 
+
+
 		//Queue
 		RegisterQueue<object_ptr>(this->impl->engine, "object_ptr");
 		RegisterQueue<image_ptr>(this->impl->engine, "image_ptr");
@@ -747,16 +749,21 @@ void visionhub::v1::engine::loadInternals() {
 		RegisterQueue<double>(this->impl->engine, "double");
 		RegisterQueue<std::string>(this->impl->engine, "string");
 
+		 
+
+		//Map
+		RegisterMap<int32_t>(this->impl->engine, "int32");
+
 
 		// Class definition
 		binder
 
 
 			.addAutoGlobalMethod2(visionhub::v1::facadeEngine, argument, (), visionhub::v1::value, "core::value argument()", this->impl->facadeEngine.get())
-			.addAutoGlobalMethod2(visionhub::v1::facadeEngine, output, (const visionhub::v1::value & value), void, "void output(const core::value&in)", this->impl->facadeEngine.get())
-			.addAutoGlobalMethod2(visionhub::v1::facadeEngine, output, (const std::string& text, const object_ptr & _object), void, "void output(const string&in, const core::object_ptr&in)", this->impl->facadeEngine.get())
-
+			.addAutoGlobalMethod2(visionhub::v1::facadeEngine, output, (const visionhub::v1::value& value), void, "void output(const core::value&in)", this->impl->facadeEngine.get())
+			.addAutoGlobalMethod2(visionhub::v1::facadeEngine, output, (const std::string& text, const object_ptr& _object), void, "void output(const string&in, const core::object_ptr&in)", this->impl->facadeEngine.get())
 			.addAutoGlobalMethod2(visionhub::v1::facadeEngine, make_image, (unsigned int, unsigned int, unsigned int, depthType), image_ptr, "core::image_ptr make_image(uint width, uint height, uint channel, core::depthType depth)", this->impl->facadeEngine.get())
+
 			.addAutoMethod2(image, width, (), unsigned int, "uint width()")
 			.addAutoMethod2(image, height, (), unsigned int, "uint height()")
 			.addAutoMethod2(image, channel, (), unsigned int, "uint channel()")
@@ -773,18 +780,18 @@ void visionhub::v1::engine::loadInternals() {
 			.addAutoMethod2(rect, width, (), double, "double width()")
 			.addAutoMethod2(rect, width, (double), void, "void width(double)")
 			.addAutoMethod2(rect, height, (), double, "double height()")
-			.addAutoMethod2(rect, height, (double), void, "void height(double)")
+			.addAutoMethod2(rect, height, (double), void, "void height(double)");
 
-			.addAutoGlobalFunction2(test, make_test, (double, double, double, double), test_ptr, "core::test_ptr make_test(double, double, double, double)")
-			.addAutoMethod2(test, x, (), double, "double x()")
-			.addAutoMethod2(test, x, (double), void, "void x(double)")
-			.addAutoMethod2(test, y, (), double, "double y()")
-			.addAutoMethod2(test, y, (double), void, "void y(double)")
-			.addAutoMethod2(test, width, (), double, "double width()")
-			.addAutoMethod2(test, width, (double), void, "void width(double)")
-			.addAutoMethod2(test, height, (), double, "double height()")
-			.addAutoMethod2(test, get, (), std::vector<test_ptr>, "vector_test_ptr get()")
-			.addAutoMethod2(test, height, (double), void, "void height(double)");
+			//.addAutoGlobalFunction2(test, make_test, (double, double, double, double), test_ptr, "core::test_ptr make_test(double, double, double, double)")
+			//.addAutoMethod2(test, x, (), double, "double x()")
+			//.addAutoMethod2(test, x, (double), void, "void x(double)")
+			//.addAutoMethod2(test, y, (), double, "double y()")
+			//.addAutoMethod2(test, y, (double), void, "void y(double)")
+			//.addAutoMethod2(test, width, (), double, "double width()")
+			//.addAutoMethod2(test, width, (double), void, "void width(double)")
+			//.addAutoMethod2(test, height, (), double, "double height()")
+			//.addAutoMethod2(test, get, (), std::vector<test_ptr>, "vector_test_ptr get()")
+			//.addAutoMethod2(test, height, (double), void, "void height(double)");
 
 			
 			
@@ -812,9 +819,9 @@ void visionhub::v1::engine::loadInternals() {
 #pragma endregion
 
 #pragma region Factory
-std::shared_ptr<visionhub::v1::engine> visionhub::v1::engine::create() {
+visionhub::v1::engine_ptr visionhub::v1::engine::create() {
 	try {
-		return std::shared_ptr<visionhub::v1::engine>(new visionhub::v1::engine());
+		return visionhub::v1::engine_ptr(new visionhub::v1::engine());
 	}
 	catch (...) {
 		throw;
@@ -843,7 +850,7 @@ void visionhub::v1::engine::addLibrary(std::vector<std::string> names) {
 	}
 }
 
-void visionhub::v1::engine::loadLibrary(std::string path) {
+void visionhub::v1::engine::loadPlugin(std::string path) {
 	try {
 
 		std::scoped_lock lock(this->impl->script_lock);
@@ -972,6 +979,76 @@ void visionhub::v1::engine::loadScript(std::string scriptName, std::string conte
 
 }
 
+void visionhub::v1::engine::loadScript(std::filesystem::path path) {
+	try {
+
+		std::scoped_lock lock(this->impl->script_lock);
+
+		auto _filePath = path.u8string();
+		auto filename = path.filename().u8string();
+		std::ifstream ifs(_filePath, std::ios::binary);
+		if (!ifs) {
+			throw std::runtime_error("Failed to open file: " + filename);
+		}
+
+		std::ostringstream oss;
+		oss << ifs.rdbuf();  // 스트림 전체를 한 번에 읽기
+		auto context = oss.str();
+
+		this->impl->script_content = context;
+		this->impl->script_name = filename;
+	}
+	catch (...) {
+		throw;
+	}
+}
+
+void visionhub::v1::engine::compile(std::filesystem::path path) {
+	try {
+
+		std::scoped_lock lock(this->impl->script_lock);
+
+		auto _filePath = path.u8string();
+		auto filename = path.filename().u8string();
+		std::ifstream ifs(_filePath, std::ios::binary);
+		if (!ifs) {
+			throw std::runtime_error("Failed to open file: " + filename);
+		}
+
+		std::ostringstream oss;
+		oss << ifs.rdbuf();  // 스트림 전체를 한 번에 읽기
+		auto context = oss.str();
+
+		this->impl->script_content = context;
+		this->impl->script_name = filename;
+
+		this->impl->compileFromSource();
+		this->impl->bindFunc();
+		this->impl->ensureContext();
+	}
+	catch (...) {
+		throw;
+	}
+}
+
+void visionhub::v1::engine::compile(std::string scriptName, std::string content) {
+	try {
+		std::scoped_lock lock(this->impl->script_lock);
+
+		this->impl->script_content = content;
+		this->impl->script_name = scriptName;
+
+
+		this->impl->compileFromSource();
+		this->impl->bindFunc();
+		this->impl->ensureContext();
+
+	}
+	catch (...) {
+		throw;
+	}
+}
+
 void visionhub::v1::engine::compile() {
 	try {
 
@@ -980,8 +1057,6 @@ void visionhub::v1::engine::compile() {
 		this->impl->compileFromSource();
 		this->impl->bindFunc();
 		this->impl->ensureContext();
-
-		this->impl->libraryLoaded = true;
 	}
 	catch (...) {
 
@@ -1025,7 +1100,7 @@ void visionhub::v1::engine::abort() {
 	}
 }
 
-void visionhub::v1::engine::argument(visionhub::v1::sharedValue data) {
+void visionhub::v1::engine::argument(visionhub::v1::value_ptr data) {
 	try {
 
 		std::scoped_lock lock(this->impl->script_lock);
@@ -1038,7 +1113,7 @@ void visionhub::v1::engine::argument(visionhub::v1::sharedValue data) {
 	}
 }
 
-visionhub::v1::sharedValue visionhub::v1::engine::output() {
+visionhub::v1::value_ptr visionhub::v1::engine::output() {
 	try {
 
 		std::scoped_lock lock(this->impl->script_lock);

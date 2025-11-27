@@ -1,9 +1,9 @@
 #pragma once
 
-#ifndef VISIONHUB_AOI_NATIVE_ENGINE_STACK_HELPER
-#define VISIONHUB_AOI_NATIVE_ENGINE_STACK_HELPER
+#ifndef VISIONHUB_AOI_NATIVE_ENGINE_MAP_HELPER
+#define VISIONHUB_AOI_NATIVE_ENGINE_MAP_HELPER
 
-#include <stack>
+#include <map>
 #include <string>
 #include <assert.h>
 #include <angelscript.h>
@@ -12,7 +12,7 @@ namespace visionhub {
 	namespace v1 {
 
 		template<typename T, typename V>
-		class helper_stack {
+		class helper_map {
 		public:
 
 			static void constructor(T* self) {
@@ -25,23 +25,31 @@ namespace visionhub {
 
 			static void copyConstructor(T* self, const T& rhs)
 			{
-				new (self) T(rhs);
+				new (self)T(rhs);
 			}
 
-			static void push(T* self, const V& value) {
-				self->push(value);
+			static void insert(T* self, const std::string& key, const V& value) {
+				self->insert({ key, value });
 			}
 
-			static const V& top(T* self) {
-				return self->top();
+			static void clear(T* self) {
+				return self->clear();
+			}
+
+			static std::size_t count(T* self, const std::string&key) {
+				return self->count(key);
 			}
 
 			static bool empty(T* self) {
 				return self->empty();
 			}
 
-			static void pop(T* self) {
-				self->pop();
+			static std::size_t erase(T* self, const std::string&key) {
+				return self->erase(key);
+			}
+
+			static const V& opIndex(T* self, const std::string& key) {
+				return (*self)[key];
 			}
 
 			static std::size_t size(T* self) {
@@ -50,23 +58,24 @@ namespace visionhub {
 		};
 
 
-		template<typename V> 
-		void RegisterStack(asIScriptEngine* engine,
-						   const std::string T_AS) {
+		template<typename V>
+		void RegisterMap(
+			asIScriptEngine* engine,
+			const std::string T_AS) {
 
 
-			typedef std::stack<V> StackType;
-			typedef helper_stack<StackType, V> FuncBase; 
+			typedef std::map<std::string, V> MapType;
+			typedef helper_map<MapType, V> FuncBase;
 
-			const std::string V_AS = std::string("stack_") + T_AS;
+			const std::string V_AS = std::string("map_") + T_AS;
 
 			assert(engine && "Passed NULL engine pointer to register stack");
 
 			int error_code = 0;
 			error_code = engine->RegisterObjectType(
 				V_AS.c_str(),
-				sizeof(StackType),
-				asOBJ_VALUE | asGetTypeTraits<StackType>());
+				sizeof(MapType),
+				asOBJ_VALUE | asGetTypeTraits<MapType>());
 			assert(error_code >= 0 && "Failed to register object type");
 
 			error_code = engine->RegisterObjectBehaviour(
@@ -95,17 +104,25 @@ namespace visionhub {
 
 			error_code = engine->RegisterObjectMethod(
 				V_AS.c_str(),
-				(std::string("void push(const ") + T_AS + "&in)").c_str(),
-				asFUNCTION(FuncBase::push),
+				(std::string("void insert(string, const ") + T_AS + "&in)").c_str(),
+				asFUNCTION(FuncBase::insert),
 				asCALL_CDECL_OBJFIRST);
-			assert(error_code >= 0 && "Failed to register push function");
+			assert(error_code >= 0 && "Failed to register insert function");
 
 			error_code = engine->RegisterObjectMethod(
 				V_AS.c_str(),
-				(std::string("const ") + T_AS + "& top()").c_str(),
-				asFUNCTION(FuncBase::top),
+				std::string("void clear()").c_str(),
+				asFUNCTION(FuncBase::clear),
 				asCALL_CDECL_OBJFIRST);
-			assert(error_code >= 0 && "Failed to register top function");
+			assert(error_code >= 0 && "Failed to register clear function");
+
+
+			error_code = engine->RegisterObjectMethod(
+				V_AS.c_str(),
+				std::string("int64 count(const string&in)").c_str(),
+				asFUNCTION(FuncBase::count),
+				asCALL_CDECL_OBJFIRST);
+			assert(error_code >= 0 && "Failed to register count function");
 
 
 			error_code = engine->RegisterObjectMethod(
@@ -118,10 +135,18 @@ namespace visionhub {
 
 			error_code = engine->RegisterObjectMethod(
 				V_AS.c_str(),
-				"void pop()",
-				asFUNCTION(FuncBase::pop),
+				"void erase(const string &in)",
+				asFUNCTION(FuncBase::erase),
 				asCALL_CDECL_OBJFIRST);
-			assert(error_code >= 0 && "Failed to register pop function");
+			assert(error_code >= 0 && "Failed to register erase function");
+
+
+			error_code = engine->RegisterObjectMethod(
+				V_AS.c_str(),
+				(T_AS + " & opIndex(const string&in) const").c_str(),
+				asFUNCTION(FuncBase::opIndex),
+				asCALL_CDECL_OBJFIRST);
+			assert(error_code >= 0 && "Failed to register operator[]");
 
 
 			error_code = engine->RegisterObjectMethod(

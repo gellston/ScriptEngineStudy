@@ -135,7 +135,6 @@
     <ClCompile Include="binder.cpp" />
     <ClCompile Include="blob.cpp" />
     <ClCompile Include="staticCallStarter.cpp" />
-    <ClCompile Include="test.cpp" />
     <ClCompile Include="typeRegistry.cpp" />
     <ClCompile Include="value.cpp" />
     <ClCompile Include="snapShot.cpp" />
@@ -180,7 +179,6 @@
     <ClInclude Include="core\types\coreVersion.h" />
     <ClInclude Include="core\types\execMode.h" />
     <ClInclude Include="core\types\traceType.h" />
-    <ClInclude Include="core\test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

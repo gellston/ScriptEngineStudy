@@ -13,7 +13,7 @@
 
 namespace VisionHub {
 	namespace V1 {
-		enum class CoreTypes {
+		public enum class CoreTypes {
 			None,
 			Object,
 			Rect,

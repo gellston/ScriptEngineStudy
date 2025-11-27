@@ -21,6 +21,27 @@
     <ClCompile Include="CoreVersion.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Blob.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Value.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryBlock.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SnapValue.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SnapEntry.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SnapFrame.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SnapShot.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Types\CoreTypes.h">
@@ -36,6 +57,36 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Core\Types\TraceType.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Types\ColorType.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Collection\Blob.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Collection\ValueKind.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Collection\Value.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Collection\MemoryBlock.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\SnapShot\SnapValue.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\SnapShot\SnapKind.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\SnapShot\SnapEntry.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\SnapShot\SnapFrame.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\SnapShot\SnapShot.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

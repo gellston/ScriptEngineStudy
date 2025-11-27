@@ -7,7 +7,7 @@
 
 namespace VisionHub {
 	namespace V1 {
-		enum class DepthType {
+		public enum class DepthType {
 			Bit8=1
 		};
 	}

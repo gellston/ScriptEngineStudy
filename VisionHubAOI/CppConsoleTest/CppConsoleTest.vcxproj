@@ -122,6 +122,13 @@
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
       <AdditionalDependencies>VisionHubAOI.Native.Engine.lib;VisionHubAOI.Native.Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>
+if not exist "$(OutDir)Plugins" mkdir "$(OutDir)Plugins"
+
+
+copy /y "$(OutDir)VisionHubAOI.Plugin.Opencv.dll" ""$(OutDir)Plugins\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -142,6 +149,13 @@
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
       <AdditionalDependencies>VisionHubAOI.Native.Engine.lib;VisionHubAOI.Native.Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>
+if not exist "$(OutDir)Plugins" mkdir "$(OutDir)Plugins"
+
+
+copy /y "$(OutDir)VisionHubAOI.Plugin.Opencv.dll" ""$(OutDir)Plugins\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CppConsoleTest.cpp" />

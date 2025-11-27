@@ -61,6 +61,10 @@ visionhub::v1::blob::blob(const visionhub::v1::memoryBlock & block) : impl(new i
 
 	this->impl->block = block;
 }
+
+visionhub::v1::blob::blob() : impl(new impl_blob()) {
+
+}
 #pragma endregion
 
 #pragma region Public Functions

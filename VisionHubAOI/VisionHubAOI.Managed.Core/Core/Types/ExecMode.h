@@ -7,7 +7,7 @@
 
 namespace VisionHub {
 	namespace V1 {
-		enum class ExecMode {
+		public enum class ExecMode {
 			Run = 0,
 			StepOnce = 1,
 			RunToBreakPoint = 2

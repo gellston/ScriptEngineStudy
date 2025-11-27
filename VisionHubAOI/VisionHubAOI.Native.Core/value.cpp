@@ -301,6 +301,10 @@ visionhub::v1::value visionhub::v1::value::operator [](const int & index) {
 	return _array[index];
 }
 
+void visionhub::v1::value::operator=(const visionhub::v1::value& _value) {
+	this->impl->v = _value.impl->v;
+}
+
 
 void visionhub::v1::value::add(const visionhub::v1::value& value) {
 	if (!std::holds_alternative<visionhub::v1::array>(this->impl->v)) {
@@ -562,7 +566,7 @@ visionhub::v1::value visionhub::v1::value::deserialize(const std::vector<uint8_t
 			data += sizeof(uint64_t);
 			offset += sizeof(uint64_t);
 
-			auto dataPoint = (uint8_t*)&data;
+			auto dataPoint = (uint8_t*)data;
 
 			visionhub::v1::blob _blob(dataPoint, size);
 			visionhub::v1::value _value(_blob);
@@ -822,6 +826,22 @@ std::vector<uint8_t> visionhub::v1::value::serialize() {
 	
 
 
+	
+}
+
+
+std::vector<std::string> visionhub::v1::value::keys() {
+	std::vector<std::string> temp;
+	if (!std::holds_alternative<visionhub::v1::map>(this->impl->v))
+		return temp;
+
+	auto& map = std::get<visionhub::v1::map>(this->impl->v);
+
+	for (auto& keypair : map) {
+		temp.push_back(keypair.first);
+	}
+
+	return temp;
 	
 }
 #pragma endregion

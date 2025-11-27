@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VisionHubAOI.Managed.Engine\VisionHubAOI.Managed.Engine.vcxproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="&#xD;&#xA;if not exist &quot;$(OutDir)Plugins&quot; mkdir &quot;$(OutDir)Plugins&quot;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;copy /y &quot;$(SolutionDir)\\x64\\$(ConfigurationName)\\VisionHubAOI.Plugin.Opencv.dll&quot; &quot;&quot;$(OutDir)Plugins\&quot;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;xcopy &quot;$(SolutionDir)\\x64\\$(ConfigurationName)\\&quot; &quot;$(SolutionDir)\\SharpConsoleTest\\bin\\x64\\$(ConfigurationName)\\$(TargetFramework)\\&quot; /c /i /e /h /y" />
+  </Target>
+
+</Project>
